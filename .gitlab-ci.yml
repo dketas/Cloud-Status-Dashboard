@@ -1,30 +1,48 @@
 stages:
   - lint
   - test
-  - docker-build
+  - sonarqube_scan
+  - docker_build
+  - deploy
 
 lint:
-  image: python:3.10
   stage: lint
+  image: python:3.9
   script:
     - pip install flake8
-    - flake8 app.py
+    - flake8 .
 
 test:
-  image: python:3.10
   stage: test
+  image: python:3.9
   script:
-    - pip install requests
-    - python -m unittest discover
+    - pip install -r requirements.txt
+    - pytest
 
-docker-build:
+sonarqube_scan:
+  stage: sonarqube_scan
+  image: sonarsource/sonar-scanner-cli:latest
+  script:
+    - sonar-scanner
+  allow_failure: true
+
+docker_build:
+  stage: docker_build
   image: docker:latest
-  stage: docker-build
   services:
     - docker:dind
-  before_script:
-    - docker info
+  variables:
+    DOCKER_DRIVER: overlay2
   script:
-    - docker build -t dketas/cloud-status-dashboard:latest .
-    - echo "Docker image built (push optional if Docker Hub access configured)"
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:latest
+
+deploy:
+  stage: deploy
+  image: bitnami/kubectl:latest
+  script:
+    - kubectl apply -f flask-app.yaml
+  only:
+    - main
 
