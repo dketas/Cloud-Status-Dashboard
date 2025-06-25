@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,3 +33,4 @@ spec:
     port: 5000               # service port inside cluster
     targetPort: 5000         # pod container port
     nodePort: 30080          # external port on node you can access via <EC2_PUBLIC_IP>:30080
+

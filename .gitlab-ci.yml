@@ -1,0 +1,30 @@
+stages:
+  - lint
+  - test
+  - docker-build
+
+lint:
+  image: python:3.10
+  stage: lint
+  script:
+    - pip install flake8
+    - flake8 app.py
+
+test:
+  image: python:3.10
+  stage: test
+  script:
+    - pip install requests
+    - python -m unittest discover
+
+docker-build:
+  image: docker:latest
+  stage: docker-build
+  services:
+    - docker:dind
+  before_script:
+    - docker info
+  script:
+    - docker build -t dketas/cloud-status-dashboard:latest .
+    - echo "Docker image built (push optional if Docker Hub access configured)"
+
