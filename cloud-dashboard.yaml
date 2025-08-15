@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloud-dashboard
+  template:
+    metadata:
+      labels:
+        app: cloud-dashboard
+    spec:
+      containers:
+        - name: cloud-dashboard
+          image: dketas/cloud-status-dashboard:latest
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-dashboard
+spec:
+  type: NodePort
+  selector:
+    app: cloud-dashboard
+  ports:
+    - protocol: TCP
+      port: 5000        # ClusterIP port
+      targetPort: 5000  # Container port
+      nodePort: 30007   # External access port
+
