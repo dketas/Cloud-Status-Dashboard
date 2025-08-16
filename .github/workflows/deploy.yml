@@ -1,0 +1,30 @@
+name: CD - Deploy to K3s (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Image tag to deploy (e.g., latest or a commit SHA)"
+        required: true
+        default: "latest"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH and deploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+            echo "Cluster status:"
+            sudo k3s kubectl get nodes
+            echo "Set new image:"
+            sudo k3s kubectl set image deployment/cloud-dashboard cloud-dashboard=${{ secrets.DOCKERHUB_USERNAME }}/cloud-status-dashboard:${{ inputs.image_tag }} --record
+            echo "Wait for rollout:"
+            sudo k3s kubectl rollout status deploy/cloud-dashboard --timeout=120s
+            echo "Pods:"
+            sudo k3s kubectl get pods -o wide
