@@ -9,7 +9,7 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -17,15 +17,15 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies (optional tests)
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           if [ -f app/requirements.txt ]; then pip install -r app/requirements.txt; fi
-          pip install pytest || true
+          pip install pytest
 
-      - name: Run tests (won't fail if none)
+      - name: Run tests
         run: |
-          pytest -q || echo "No tests found or tests skipped"
+          pytest -q
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -36,7 +36,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build & push
+      - name: Build & push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -45,3 +45,4 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/cloud-status-dashboard:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/cloud-status-dashboard:${{ github.sha }}
+
