@@ -28,7 +28,12 @@ jobs:
           pip install -r app/requirements.txt
           pip install pytest
 
+      - name: Clean Python cache
+        run: |
+          find . -name "__pycache__" -type d -exec rm -r {} +
+          find . -name "*.pyc" -type f -delete
+
       - name: Run tests
-        run: pytest -q
+        run: pytest -q tests/
 
 
