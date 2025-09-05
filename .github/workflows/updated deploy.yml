@@ -1,5 +1,5 @@
-#Manually trigger CD (deploy.yml)
-#→ Pulls image from DockerHub into K3s and deploys it.
+# Manually trigger CD (deploy.yml)
+# → Pulls image from DockerHub into K3s and deploys it.
 name: CD - Deploy to K3s (manual)
 
 on:
