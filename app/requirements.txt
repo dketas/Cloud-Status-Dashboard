@@ -2,3 +2,4 @@ flask
 requests
 flake8
 pytest
+prometheus_client
