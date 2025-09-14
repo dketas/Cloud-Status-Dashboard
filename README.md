@@ -14,7 +14,8 @@ This project provides a Cloud Status Dashboard, monitoring the availability of a
     
 #Architecture
 
-![Architecture Diagram](images/Mermaid Chart - Create complex, visual diagrams with text. A smarter way of creating diagrams.-2025-09-14-100750.svg)
+![Architecture Diagram](images/Mermaid%20Chart%20-%20Create%20complex,%20visual%20diagrams%20with%20text.%20A%20smarter%20way%20of%20creating%20diagrams.-2025-09-14-100750.svg)
+
 
 
 
