@@ -12,7 +12,7 @@ This project provides a Cloud Status Dashboard, monitoring the availability of a
   - Automated AWS infrastructure provisioning through Terraform.
   - CI/CD pipeline using GitHub Actions to automate build, test, and deployment.
     
-#Architecture
+## Architecture 
 
 ![Architecture Diagram](images/Mermaid%20Chart%20-%20Create%20complex,%20visual%20diagrams%20with%20text.%20A%20smarter%20way%20of%20creating%20diagrams.-2025-09-14-100750.svg)
 
