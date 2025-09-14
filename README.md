@@ -13,7 +13,9 @@ This project provides a Cloud Status Dashboard, monitoring the availability of a
   - CI/CD pipeline using GitHub Actions to automate build, test, and deployment.
     
 #Architecture
-![Architecture Diagram]('Mermaid Chart - Create complex, visual diagrams with text. A smarter way of creating diagrams.-2025-09-14-100750.svg')
+
+![Architecture Diagram](images/mermaid-diagram-2025-09-14-100750.svg)
+
 
 
 
