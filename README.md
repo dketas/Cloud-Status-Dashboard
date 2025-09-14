@@ -32,31 +32,31 @@ This project provides a Cloud Status Dashboard, monitoring the availability of a
       - cd Cloud-Status-Dashboard
     
   2. Provision AWS Infrastructure Using Terraform
-    -  cd terraform-cloud-status
-    -  terraform init
-    -  terraform apply
+      -  cd terraform-cloud-status
+      -  terraform init
+      -  terraform apply
      Review the plan and approve with yes.
      Terraform will provision an EC2 instance and necessary security groups.
 
   3. Connect to the EC2 Instance
-    - > ssh -i /path/to/your-key.pem ec2-user@<your-ec2-public-ip>
+      -  ssh -i /path/to/your-key.pem ec2-user@<your-ec2-public-ip>
     
   4. Deploy the Flask Application
     Clone the repository or pull the latest code on the EC2 instance.
     Build and run the Docker container:
-    -  docker build -t cloud-status-dashboard .
-    -  docker run -d -p 5000:5000 cloud-status-dashboard
+      -  docker build -t cloud-status-dashboard .
+      -  docker run -d -p 5000:5000 cloud-status-dashboard
     
   5. (Optional) Deploy on Kubernetes
     Apply Kubernetes manifests for deployment and service:
-    -  kubectl apply -f k8s/deployment.yaml
-    -  kubectl apply -f k8s/service.yaml
+      -  kubectl apply -f k8s/deployment.yaml
+      -  kubectl apply -f k8s/service.yaml
     Verify pods and services are running:
-    -  kubectl get pods
-    -  kubectl get svc
+      -  kubectl get pods
+      -  kubectl get svc
     
   6. Continuous Integration and Deployment
-    Push your changes to the main branch on GitHub.
+      Push your changes to the main branch on GitHub.
 
 GitHub Actions pipeline will automatically build, test, and deploy the updated Docker image to your Kubernetes cluster via SSH and kubectl.
 
